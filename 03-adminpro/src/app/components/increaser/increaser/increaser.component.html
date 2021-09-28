@@ -1,0 +1,20 @@
+<div class="input-group">
+  <span class="input-group-btn">
+    <button (click)="setPorcentaje(-5)" [ngClass]="btnClass" type="button">
+      <i class="fa fa-minus"></i>
+    </button>
+  </span>
+  <input
+    type="number"
+    class="form-control"
+    [ngClass]="{'is-invalid': porcentaje > 100 || porcentaje < 0}"
+    placeholder="Porcentaje"
+    (ngModelChange)="inputValueChange($event)"
+    [(ngModel)]="porcentaje"
+  >
+  <span class="input-group-btn">
+    <button (click)="setPorcentaje(5)" [ngClass]="btnClass" type="button">
+      <i class="fa fa-plus"></i>
+    </button>
+  </span>
+</div>
