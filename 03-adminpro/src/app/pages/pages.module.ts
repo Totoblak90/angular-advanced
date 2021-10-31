@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { Graphic1Component } from './graphic1/graphic1.component';
 import { PagesComponent } from './pages.component';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 
 
@@ -19,6 +20,7 @@ import { PagesComponent } from './pages.component';
     ProgressBarComponent,
     Graphic1Component,
     PagesComponent,
+    AccountSettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +28,13 @@ import { PagesComponent } from './pages.component';
     AppRoutingModule,
     SharedModule,
     ComponentsModule
+  ],
+  exports: [
+    DashboardComponent,
+    AccountSettingsComponent,
+    ProgressBarComponent,
+    Graphic1Component,
+    PagesComponent,
   ]
 })
 export class PagesModule { }
