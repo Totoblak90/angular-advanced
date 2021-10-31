@@ -11,6 +11,8 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { Graphic1Component } from './graphic1/graphic1.component';
 import { PagesComponent } from './pages.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { PromisesComponent } from './promises/promises.component';
+import { ObservablesComponent } from './observables/observables.component';
 
 
 
@@ -21,6 +23,8 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
     Graphic1Component,
     PagesComponent,
     AccountSettingsComponent,
+    PromisesComponent,
+    ObservablesComponent,
   ],
   imports: [
     CommonModule,
