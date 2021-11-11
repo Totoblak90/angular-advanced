@@ -10,12 +10,18 @@ import { HttpService } from '../../services/http.service';
 export class SidebarComponent {
 
   public menu: any[];
+  public imageUrl: string = ''
+  public name: string = '';
+  public email: string = '';
 
   constructor(
     private sidebarSrv: SidebarService,
     private http: HttpService
   ) {
     this.menu = this.sidebarSrv.menu;
+    this.imageUrl = http.usuario?.imageUrl;
+    this.name = http.usuario?.name;
+    this.email = http.usuario?.email;
   }
 
   public logout(): void {

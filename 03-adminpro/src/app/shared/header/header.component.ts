@@ -8,7 +8,15 @@ import { HttpService } from '../../services/http.service';
 })
 export class HeaderComponent {
 
-  constructor( private http: HttpService) { }
+  public imageUrl: string = '';
+  public email: string = '';
+  public name: string = '';
+
+  constructor( private http: HttpService) {
+    this.imageUrl = http.usuario.imageUrl;
+    this.email = http.usuario.email;
+    this.name = http.usuario.name;
+  }
 
   public logout() {
     this.http.logout();

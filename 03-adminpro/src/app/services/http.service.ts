@@ -1,74 +1,113 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { RegisterFormDataRequest, RegisterFormDataResponse } from '../interfaces/register.interface';
-import { LoginFormDataRequest, LoginFormDataResponse } from '../interfaces/login.interface';
+import {
+  RegisterFormDataRequest,
+  RegisterFormDataResponse,
+  UserDataResponse,
+} from '../interfaces/register.interface';
+import {
+  LoginFormDataRequest,
+  LoginFormDataResponse,
+} from '../interfaces/login.interface';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { ValidateToken } from '../interfaces/validate-token.interface';
 import { Router } from '@angular/router';
-
-
+import { User } from '../models/user.model';
+import { UpdateUserRequest, UpdateUserResponse } from '../interfaces/update-user.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HttpService {
+  private baseUrl: string = environment.apiBaseUrl;
+  public usuario: User;
 
-  private baseUrl: string = environment.apiBaseUrl
+  private get token(): string {
+    return localStorage.getItem('token');
+  }
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   // Auth services
-  public registerUser( formData: RegisterFormDataRequest): Observable<RegisterFormDataResponse> {
-    return this.http.post<RegisterFormDataResponse>(`${this.baseUrl}/usuarios`, formData)
-            .pipe(
-              tap((res: RegisterFormDataResponse) => localStorage.setItem('token', res.token))
-            )
+  public registerUser(
+    formData: RegisterFormDataRequest
+  ): Observable<RegisterFormDataResponse> {
+    return this.http
+      .post<RegisterFormDataResponse>(`${this.baseUrl}/usuarios`, formData)
+      .pipe(
+        tap((res: RegisterFormDataResponse) =>
+          localStorage.setItem('token', res.token)
+        )
+      );
   }
 
   public loginUser(
     formData: LoginFormDataRequest,
     rememberMe: boolean
-    ): Observable<LoginFormDataResponse> {
-
-    return this.http.post<LoginFormDataResponse>(`${this.baseUrl}/login`, formData)
+  ): Observable<LoginFormDataResponse> {
+    return this.http
+      .post<LoginFormDataResponse>(`${this.baseUrl}/login`, formData)
       .pipe(
         tap((res: LoginFormDataResponse) => {
-          localStorage.setItem('token', res.token)
+          localStorage.setItem('token', res.token);
           if (rememberMe) {
             localStorage.setItem('email', formData.email);
           } else {
-            localStorage.removeItem('email')
+            localStorage.removeItem('email');
           }
         })
-      )
+      );
   }
 
-  public loginFromGoogle( token: string ) {
-    return this.http.post(`${this.baseUrl}/login/google`, { token })
-      .pipe(
-        tap(() => {
-          localStorage.setItem('token', token)
-        })
-      )
+  public updateUser(
+    formData: UpdateUserRequest
+  ): Observable<UpdateUserResponse> {
+
+    formData = {
+      ...formData,
+      role: this.usuario.role
+    }
+
+    return this.http.put<UpdateUserResponse>(
+      `${this.baseUrl}/usuarios/${this.usuario.uid}`,
+      formData,
+      {
+        headers: {
+          'x-token': this.token || '',
+        },
+      }
+    );
   }
 
   public validateToken(): Observable<boolean> {
-
-    return this.http.get<ValidateToken>(`${this.baseUrl}/login/renew`, {
-      headers: {
-        'x-token': localStorage.getItem('token') || ''
-      }
-    })
+    return this.http
+      .get<ValidateToken>(`${this.baseUrl}/login/renew`, {
+        headers: {
+          'x-token': this.token || '',
+        },
+      })
       .pipe(
-        tap( (res) => localStorage.setItem('token', res.JWToken) ),
-        map( res => true),
-        catchError( error => of(false))
-      )
+        map((res) => {
+          this.setNewUser(res?.usuario);
+          localStorage.setItem('token', res.JWToken);
+          return true;
+        }),
+        catchError((error) => of(false))
+      );
+  }
+
+  private setNewUser(res: UserDataResponse): void {
+    this.usuario = new User(
+      res.nombre,
+      res.email,
+      null,
+      res.img,
+      res.google,
+      res.role,
+      res.uid
+    );
   }
 
   public logout(): void {

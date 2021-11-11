@@ -13,9 +13,10 @@ export interface RegisterFormDataResponse {
 }
 
 export interface UserDataResponse {
-  role: string;
-  google: boolean;
-  email: string;
-  nombre: string;
-  uid: string;
+  role?: string;
+  google?: boolean;
+  email?: string;
+  img?: string;
+  nombre?: string;
+  uid?: string;
 }
