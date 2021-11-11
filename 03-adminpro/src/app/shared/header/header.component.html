@@ -362,10 +362,8 @@
                 >
               </li>
               <li role="separator" class="divider"></li>
-              <li>
-                <a routerLink="/auth/login"
-                  ><i class="fa fa-power-off"></i> Logout</a
-                >
+              <li class="pointer">
+                <a (click)="logout()"><i class="fa fa-power-off"></i> Logout</a>
               </li>
             </ul>
           </div>

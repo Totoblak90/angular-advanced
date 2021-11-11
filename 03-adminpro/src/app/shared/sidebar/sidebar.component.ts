@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
   public menu: any[];
 
-  constructor(private sidebarSrv: SidebarService) {
+  constructor(
+    private sidebarSrv: SidebarService,
+    private http: HttpService
+  ) {
     this.menu = this.sidebarSrv.menu;
   }
 
-  ngOnInit(): void {
+  public logout(): void {
+    this.http.logout();
   }
-
 }
