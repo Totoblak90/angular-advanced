@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { HttpService } from '../../services/http.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,18 +11,15 @@ import { HttpService } from '../../services/http.service';
 export class SidebarComponent {
 
   public menu: any[];
-  public imageUrl: string = ''
-  public name: string = '';
-  public email: string = '';
+  public user: User;
 
   constructor(
     private sidebarSrv: SidebarService,
     private http: HttpService
   ) {
     this.menu = this.sidebarSrv.menu;
-    this.imageUrl = http.usuario?.imageUrl;
-    this.name = http.usuario?.name;
-    this.email = http.usuario?.email;
+
+    this.user = http.usuario;
   }
 
   public logout(): void {

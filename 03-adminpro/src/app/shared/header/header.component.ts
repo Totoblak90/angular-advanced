@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from 'src/app/models/user.model';
 import { HttpService } from '../../services/http.service';
 
 @Component({
@@ -8,14 +9,10 @@ import { HttpService } from '../../services/http.service';
 })
 export class HeaderComponent {
 
-  public imageUrl: string = '';
-  public email: string = '';
-  public name: string = '';
+  public usuario: User;
 
   constructor( private http: HttpService) {
-    this.imageUrl = http.usuario.imageUrl;
-    this.email = http.usuario.email;
-    this.name = http.usuario.name;
+    this.usuario = http.usuario;
   }
 
   public logout() {
