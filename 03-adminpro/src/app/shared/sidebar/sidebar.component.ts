@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../services/users.service';
 import { User } from 'src/app/models/user.model';
 
 @Component({

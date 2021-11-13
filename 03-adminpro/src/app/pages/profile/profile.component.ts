@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import Swal from 'sweetalert2';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../services/users.service';
 import { FileUploadService } from '../../services/file-upload.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileForm = this.fb.group({
-      nombre: [this.user.name, Validators.required],
+      nombre: [this.user.nombre, Validators.required],
       email: [
         this.user.email,
         [Validators.required, Validators.pattern(this.emailPattern)],
@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
     const { nombre, email } = this.profileForm.value;
     if (
       this.profileForm.valid &&
-      (nombre !== this.user.name || email !== this.user.email)
+      (nombre !== this.user.nombre || email !== this.user.email)
     ) {
       this.updateUserInfo(nombre, email);
     }
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
   private updateUserInfo(name: string, email: string): void {
     this.httpSrv.updateUser(this.profileForm.value).subscribe(
       (res) => {
-        this.user.name = name;
+        this.user.nombre = name;
         this.user.email = email;
         Swal.fire('Great!', 'Changes were succesfully made.', 'success');
       },

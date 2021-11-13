@@ -17,6 +17,17 @@ export class SidebarService {
         { title: 'Promises', url: '/dashboard/promises' },
         { title: 'Observables', url: '/dashboard/observables' }
       ]
+    },
+
+    {
+      title: 'Mantainance',
+      icon: 'mdi mdi-folder-lock-open',
+      quantity: null,
+      subMenu: [
+        { title: 'Users', url: '/dashboard/users' },
+        { title: 'Doctors', url: '/dashboard/doctors'},
+        { title: 'Hospitals', url: '/dashboard/hospitals'}
+      ]
     }
   ]
 

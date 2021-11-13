@@ -15,7 +15,12 @@ import { Observable, of } from 'rxjs';
 import { ValidateToken } from '../interfaces/validate-token.interface';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
-import { UpdateUserRequest, UpdateUserResponse } from '../interfaces/update-user.interface';
+import {
+  UpdateUserRequest,
+  UpdateUserResponse,
+} from '../interfaces/update-user.interface';
+import { GetAllUsersResponse } from '../interfaces/all-users.interface';
+import { DeleteUserResponse } from '../interfaces/delete-user';
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +33,16 @@ export class HttpService {
     return localStorage.getItem('token');
   }
 
+  private get headers(): unknown {
+    return {
+      headers: {
+        'x-token': this.token || '',
+      },
+    };
+  }
+
   constructor(private http: HttpClient, private router: Router) {}
 
-  // Auth services
   public registerUser(
     formData: RegisterFormDataRequest
   ): Observable<RegisterFormDataResponse> {
@@ -64,30 +76,21 @@ export class HttpService {
   public updateUser(
     formData: UpdateUserRequest
   ): Observable<UpdateUserResponse> {
-
     formData = {
       ...formData,
-      role: this.usuario.role
-    }
+      role: this.usuario.role,
+    };
 
     return this.http.put<UpdateUserResponse>(
       `${this.baseUrl}/usuarios/${this.usuario.uid}`,
       formData,
-      {
-        headers: {
-          'x-token': this.token || '',
-        },
-      }
+      this.headers
     );
   }
 
   public validateToken(): Observable<boolean> {
     return this.http
-      .get<ValidateToken>(`${this.baseUrl}/login/renew`, {
-        headers: {
-          'x-token': this.token || '',
-        },
-      })
+      .get<ValidateToken>(`${this.baseUrl}/login/renew`, this.headers)
       .pipe(
         map((res) => {
           this.setNewUser(res?.usuario);
@@ -113,5 +116,42 @@ export class HttpService {
   public logout(): void {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/auth/login');
+  }
+
+  public getAllUsers(from: number = 0): Observable<GetAllUsersResponse> {
+    return this.http
+      .get<GetAllUsersResponse>(
+        `${this.baseUrl}/usuarios?desde=${from}`,
+        this.headers
+      )
+      .pipe(
+        map((res: GetAllUsersResponse) => {
+          const users = res.usuarios.map(
+            (user) =>
+              new User(
+                user.nombre,
+                user.email,
+                '',
+                user.img,
+                user.google,
+                user.role,
+                user.uid
+              )
+          );
+
+          return {
+            ok: true,
+            total: res.total,
+            usuarios: users,
+          };
+        })
+      );
+  }
+
+  public deleteUser(uid: string): Observable<DeleteUserResponse> {
+    return this.http.delete<DeleteUserResponse>(
+      `${this.baseUrl}/usuarios/${uid}`,
+      this.headers
+    );
   }
 }

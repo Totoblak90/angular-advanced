@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../services/users.service';
 import Swal from 'sweetalert2'
 import { RegisterFormDataResponse } from 'src/app/interfaces/register.interface';
 import { Router } from '@angular/router';

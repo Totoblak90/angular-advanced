@@ -11,6 +11,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { ObservablesComponent } from './observables/observables.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './mantainances/users/users.component';
 
 const routes: Routes = [
   {
@@ -24,7 +25,11 @@ const routes: Routes = [
       { path: 'account-settings', component: AccountSettingsComponent, data: { title: 'Account settings' } },
       { path: 'promises', component: PromisesComponent, data: { title: 'Promises' } },
       { path: 'observables', component: ObservablesComponent, data: { title: 'Observables' } },
-      { path: 'profile', component: ProfileComponent, data: { title: 'My profile' } }
+      { path: 'profile', component: ProfileComponent, data: { title: 'My profile' } },
+
+      // Mantainances
+      { path: 'users', component: UsersComponent, data: { title: 'Users' } },
+
     ]
   }
 ];

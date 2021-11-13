@@ -5,7 +5,7 @@ const base_url = environment.apiBaseUrl
 export class User {
 
   constructor(
-    public name: string,
+    public nombre: string,
     public email: string,
     public password?: string,
     public img?: string,
@@ -15,7 +15,7 @@ export class User {
   ) {}
 
   public get imageUrl(): string {
-    if (!this.img) return `${base_url}/upload/usuarios/no-image`
-    return `${base_url}/upload/usuarios/${this.img}`
+    if (!this.img) {return `${base_url}/upload/usuarios/no-image`}
+    else {return `${base_url}/upload/usuarios/${this.img}`}
   }
 }

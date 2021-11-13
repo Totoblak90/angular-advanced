@@ -1,0 +1,108 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search user"
+          (keyup)="searchUsers(searchInput.value)"
+          #searchInput
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="loading">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="alert alert-info text-center">
+          <h4 class="alert-heading">Loanding</h4>
+          <i class="fa fa-spin fa-refresh fa-2"></i>
+          <p class="mb-0">Please wait</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="!loading">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Users</h4>
+        <ng-container *ngIf="!searching; else searchingTemplate">
+          <h6 class="card-subtitle">
+            {{ totalUsers }} registered users on my app.
+          </h6>
+        </ng-container>
+        <ng-template #searchingTemplate>
+          <h6 class="card-subtitle">
+            {{ searchingResults }} users found.
+          </h6>
+        </ng-template>
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="w100">Avatar</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th class="w100">Role</th>
+                <th class="w100">Auth</th>
+                <th class="text-nowrap w100">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td class="text-center">
+                  <img [src]="user.imageUrl" alt="Avatra" class="avatar" />
+                </td>
+                <td>{{ user.nombre }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                  <label *ngIf="!user.google" class="label label-info"
+                    >Email</label
+                  >
+                  <label *ngIf="user.google" class="label label-danger"
+                    >Google</label
+                  >
+                </td>
+                <td class="text-nowrap text-center">
+                  <a
+                    class="pointer"
+                    (click)="deleteUser(user)"
+                    data-toggle="tooltip"
+                    data-original-title="Delete"
+                  >
+                    <i class="fa fa-close text-danger"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button
+            [disabled]="from === 0 || searching"
+            (click)="changePage(-pagination)"
+            class="btn btn-secondary"
+          >
+            Previous
+          </button>
+          &nbsp;
+          <button
+            [disabled]="from === (totalUsers - pagination) || searching"
+            (click)="changePage(pagination)"
+            class="btn btn-secondary"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

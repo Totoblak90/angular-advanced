@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../services/users.service';
 import Swal from 'sweetalert2'
 
 import { LoginFormDataResponse } from '../../interfaces/login.interface';
