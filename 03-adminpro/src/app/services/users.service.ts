@@ -18,6 +18,7 @@ import { User } from '../models/user.model';
 import {
   UpdateUserRequest,
   UpdateUserResponse,
+  UpdateUserResponseFromAdminPanel,
 } from '../interfaces/update-user.interface';
 import { GetAllUsersResponse } from '../interfaces/all-users.interface';
 import { DeleteUserResponse } from '../interfaces/delete-user';
@@ -76,10 +77,12 @@ export class HttpService {
   public updateUser(
     formData: UpdateUserRequest
   ): Observable<UpdateUserResponse> {
+
     formData = {
       ...formData,
-      role: this.usuario.role,
-    };
+      role: this.usuario.role
+    }
+
 
     return this.http.put<UpdateUserResponse>(
       `${this.baseUrl}/usuarios/${this.usuario.uid}`,
@@ -151,6 +154,17 @@ export class HttpService {
   public deleteUser(uid: string): Observable<DeleteUserResponse> {
     return this.http.delete<DeleteUserResponse>(
       `${this.baseUrl}/usuarios/${uid}`,
+      this.headers
+    );
+  }
+
+  public updateUserFromAdminPanel(
+    formData: User
+  ): Observable<UpdateUserResponseFromAdminPanel> {
+
+    return this.http.put<UpdateUserResponseFromAdminPanel>(
+      `${this.baseUrl}/usuarios/${formData.uid}`,
+      formData,
       this.headers
     );
   }

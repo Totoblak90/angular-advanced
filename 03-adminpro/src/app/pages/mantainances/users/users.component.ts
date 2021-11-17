@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { HttpService } from '../../../services/users.service';
 import { GetAllUsersResponse } from '../../../interfaces/all-users.interface';
-import { finalize } from 'rxjs/operators';
+import { delay, finalize } from 'rxjs/operators';
 import { SearchService } from '../../../services/search.service';
 import { Search } from 'src/app/interfaces/search';
 import Swal from 'sweetalert2';
-import { DeleteUserResponse } from '../../../interfaces/delete-user';
+import { UpdateUserResponseFromAdminPanel } from 'src/app/interfaces/update-user.interface';
+import { ModalImgService } from '../../../services/modal-img.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
   public totalUsers: number = 0;
   public users: User[] = [];
   private from: number = 0;
@@ -21,11 +23,19 @@ export class UsersComponent implements OnInit {
   public pagination: number;
   public searching: boolean = false;
   public searchingResults: number = 0;
+  private destroy$: Subject<boolean> = new Subject();
 
-  constructor(private usersSrv: HttpService, private search: SearchService) {}
+  constructor(
+    private modalImgSrv: ModalImgService,
+    private usersSrv: HttpService,
+    private search: SearchService
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
+    this.modalImgSrv.showUploadedImage
+      .pipe(delay(500))
+      .subscribe((img) => this.loadUsers());
   }
 
   public loadUsers(): void {
@@ -98,5 +108,21 @@ export class UsersComponent implements OnInit {
         this.loadUsers();
       }
     });
+  }
+
+  changeRole(user: User) {
+    this.usersSrv.updateUserFromAdminPanel(user).subscribe(
+      (res: UpdateUserResponseFromAdminPanel) => null,
+      (err) => Swal.fire('Error', 'Could not update the user', 'error')
+    );
+  }
+
+  public openModal(user: User): void {
+    this.modalImgSrv.showModal('usuarios', user.uid, user.img);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

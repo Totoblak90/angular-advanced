@@ -5,13 +5,15 @@ import { ChartsModule } from 'ng2-charts';
 
 import { IncreaserComponent } from './increaser/increaser/increaser.component';
 import { DognoughtChartComponent } from './dognought-chart/dognought-chart.component';
+import { ModalImgComponent } from './modal-img/modal-img.component';
 
 
 
 @NgModule({
   declarations: [
     IncreaserComponent,
-    DognoughtChartComponent
+    DognoughtChartComponent,
+    ModalImgComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { DognoughtChartComponent } from './dognought-chart/dognought-chart.compo
   ],
   exports: [
     IncreaserComponent,
-    DognoughtChartComponent
+    DognoughtChartComponent,
+    ModalImgComponent
   ]
 })
 export class ComponentsModule { }

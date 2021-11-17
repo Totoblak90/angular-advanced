@@ -51,7 +51,7 @@
                 <th class="w100">Avatar</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th class="w100">Role</th>
+                <th class="w150">Role</th>
                 <th class="w100">Auth</th>
                 <th class="text-nowrap w100">Actions</th>
               </tr>
@@ -59,12 +59,17 @@
             <tbody>
               <tr *ngFor="let user of users">
                 <td class="text-center">
-                  <img [src]="user.imageUrl" alt="Avatra" class="avatar" />
+                  <img (click)="openModal(user)" [src]="user.imageUrl" alt="Avatar" class="avatar pointer" />
                 </td>
                 <td>{{ user.nombre }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.role }}</td>
                 <td>
+                  <select class="form-control" (change)="changeRole(user)" [(ngModel)]="user.role">
+                    <option value="ADMIN_ROLE">Admin</option>
+                    <option value="USER_ROLE">User</option>
+                  </select>
+                </td>
+                <td class="text-center">
                   <label *ngIf="!user.google" class="label label-info"
                     >Email</label
                   >

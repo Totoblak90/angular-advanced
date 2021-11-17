@@ -1,3 +1,4 @@
+import { User } from '../models/user.model';
 export interface UpdateUserRequest {
   nombre: string;
   email: string;
@@ -11,4 +12,9 @@ export interface UpdateUserResponse {
   role: string;
   uid: string;
   img?: string;
+}
+
+export interface UpdateUserResponseFromAdminPanel {
+  ok: boolean;
+  usuario: User
 }
