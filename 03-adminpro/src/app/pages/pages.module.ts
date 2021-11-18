@@ -15,6 +15,9 @@ import { PromisesComponent } from './promises/promises.component';
 import { ObservablesComponent } from './observables/observables.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './mantainances/users/users.component';
+import { HospitalsComponent } from './mantainances/hospitals/hospitals.component';
+import { DoctorsComponent } from './mantainances/doctors/doctors.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 
@@ -29,6 +32,8 @@ import { UsersComponent } from './mantainances/users/users.component';
     ObservablesComponent,
     ProfileComponent,
     UsersComponent,
+    HospitalsComponent,
+    DoctorsComponent,
   ],
   imports: [
     CommonModule,
@@ -36,7 +41,8 @@ import { UsersComponent } from './mantainances/users/users.component';
     AppRoutingModule,
     SharedModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ],
   exports: [
     DashboardComponent,

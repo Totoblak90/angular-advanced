@@ -12,6 +12,8 @@ import { PromisesComponent } from './promises/promises.component';
 import { ObservablesComponent } from './observables/observables.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './mantainances/users/users.component';
+import { HospitalsComponent } from './mantainances/hospitals/hospitals.component';
+import { DoctorsComponent } from './mantainances/doctors/doctors.component';
 
 const routes: Routes = [
   {
@@ -28,7 +30,9 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent, data: { title: 'My profile' } },
 
       // Mantainances
-      { path: 'users', component: UsersComponent, data: { title: 'Users' } },
+      { path: 'users', component: UsersComponent, data: { title: 'Users admin panel' } },
+      { path: 'hospitals', component: HospitalsComponent, data: { title: 'Hospitals admin panel' } },
+      { path: 'doctors', component: DoctorsComponent, data: { title: 'Doctors admin panel' } },
 
     ]
   }

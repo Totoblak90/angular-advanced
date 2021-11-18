@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Search } from '../interfaces/search';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.model';
+import { Hospitale } from '../interfaces/hospitals';
+import { Doctor } from '../interfaces/doctors';
 
 @Injectable({
   providedIn: 'root',
@@ -37,17 +39,24 @@ export class SearchService {
       )
       .pipe(
         map((res: Search) => {
+          let resultados;
           switch (type) {
             case 'usuarios':
-              const resultados = this.transformUsuarios(res.resultados);
+              resultados = this.transformUsuarios(res.resultados as User[]);
               return {
                 ok: res.ok,
                 resultados,
               };
             case 'medicos':
-              return;
+              return {
+                ok: res.ok,
+                resultados: res.resultados as Doctor[]
+              }
             case 'hospitales':
-              return;
+              return {
+                ok: res.ok,
+                resultados: res.resultados as Hospitale[],
+              };
             default:
               return;
           }

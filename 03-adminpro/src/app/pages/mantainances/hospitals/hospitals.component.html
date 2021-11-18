@@ -1,0 +1,88 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input (keyup)="searchHospitals(searchInput.value)" #searchInput type="text" class="form-control"
+          placeholder="Search hospital" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="loading">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="alert alert-info text-center">
+          <h4 class="alert-heading">Loading</h4>
+          <i class="fa fa-spin fa-refresh fa-2"></i>
+          <p class="mb-0">Please wait</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="!loading">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Hospitals</h4>
+        <ng-container *ngIf="!searching; else searchingTemplate">
+          <h6 class="card-subtitle">
+            {{ hospitals.length }} registered hospital/s on my app.
+          </h6>
+        </ng-container>
+        <ng-template #searchingTemplate>
+          <h6 class="card-subtitle">
+            {{ searchingResults }} hospital/s found.
+          </h6>
+        </ng-template>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Name</th>
+                <th class="text-nowrap w100">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let hospital of hospitals">
+                <td class="text-center">
+                  <img (click)="openModal(hospital)" class="avatar pointer"
+                    [src]="hospital.img | getImage: 'hospitales'" alt="Hospital img" />
+                </td>
+                <td>
+                  <input #hospInput [(ngModel)]="hospital.nombre" type="text" class="form-control" />
+                </td>
+                <td class="text-nowrap text-center">
+                  <a data-toggle="tooltip" data-original-title="Save">
+                    <i (click)="editHospital(hospInput.value, hospital._id)"
+                      class="fa fa-save text-inverse m-r-10 pointer"></i>
+                  </a>
+                  <a data-toggle="tooltip" data-original-title="Delete">
+                    <i (click)="deleteHospital(hospital._id)" class="fa fa-close text-danger pointer"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">
+                  <img class="avatar pointer" [src]="null | getImage: 'hospitales'" alt="Hospital img" />
+                </td>
+                <td>
+                  <input #createH type="text" placeholder="New hospital" class="form-control" />
+                </td>
+                <td class="text-nowrap text-center">
+                  <a data-toggle="tooltip" data-original-title="Create">
+                    <i (click)="createHospital(createH.value)" class="fa fa-hospital-o text-inverse m-r-10 pointer"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
