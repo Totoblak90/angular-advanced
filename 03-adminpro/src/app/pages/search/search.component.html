@@ -1,0 +1,40 @@
+<div
+  *ngIf="
+    !usersResults.length &&
+      !doctorsResults.length &&
+      !hospitalsResults.length;
+  "
+  class="alert alert-info text-center"
+>
+  <p class="mb-0">
+    We couldn't find anything with the info you provided. <br />Please try again
+  </p>
+</div>
+
+<ng-container *ngIf="usersResults || hospitalsResults || doctorsResults">
+  <div class="row animated fadeIn">
+    <div *ngIf="usersResults.length" class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <app-search-table [users]="usersResults"></app-search-table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngIf="doctorsResults.length">
+      <div class="card">
+        <div class="card-body">
+          <app-search-table [doctors]="doctorsResults"></app-search-table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngIf="hospitalsResults.length">
+      <div class="card">
+        <div class="card-body">
+          <app-search-table [hospitals]="hospitalsResults"></app-search-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

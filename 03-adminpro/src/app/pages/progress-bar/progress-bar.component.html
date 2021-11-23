@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Striped Progress bar</h4>
+            <div class="progress m-t-20">
+              <div
+                class="progress-bar bg-primary progress-bar-striped active"
+                style="height:10px;"
+                role="progressbar"
+                [style.width]="getPorcentaje1"
+                ></div>
+            </div>
+
+            <div class="progress m-t-20">
+              <div
+                class="progress-bar bg-warning progress-bar-striped active"
+                style="height:10px;"
+                role="progressbar"
+                [style.width]="getPorcentaje2"
+                ></div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <app-increaser
+          [porcentaje]="porcentaje1"
+          (changedValue)="porcentaje1 = $event"
+        ></app-increaser>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <app-increaser
+          [porcentaje]="porcentaje2"
+          (changedValue)="porcentaje2 = $event"
+          [btnClass]="'btn btn-warning'"
+        ></app-increaser>
+      </div>
+    </div>
+  </div>
+
+</div>

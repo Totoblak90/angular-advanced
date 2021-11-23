@@ -1,0 +1,22 @@
+<div *ngIf="this.results.length" class="text-center">
+  <h3>{{ title }}</h3>
+</div>
+<hr>
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Avatar</th>
+      <th>Full Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let result of results" [routerLink]="result.redirect">
+      <td>{{ result.numberId }}</td>
+      <td>
+        <img [src]=" result.img | getImage: result.type" alt="Avatar" class="w100">
+      </td>
+      <td>{{ result.nombre }}</td>
+    </tr>
+  </tbody>
+</table>

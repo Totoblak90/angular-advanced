@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-6">
+      <div class="card">
+          <div class="card-body">
+            <app-dognought-chart
+              [title]="'Sales methods'"
+            ></app-dognought-chart>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <app-dognought-chart
+          [title]="'Sales'"
+          [doughnutChartData]="[[99, 274, 71]]"
+          [doughnutChartLabels]="['Confirmed', 'Processing', 'Denied']"
+        ></app-dognought-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+      <div class="card">
+          <div class="card-body">
+            <app-dognought-chart
+              [title]="'Clients'"
+              [colors]="[{backgroundColor: ['#00FF00', '#333300', '#00CCCC']}]"
+              [doughnutChartData]="[[75, 33, 220]]"
+              [doughnutChartLabels]="['New', 'Lost', 'Mantained']"
+              [doughnutChartType]="'pie'"
+            ></app-dognought-chart>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card">
+        <div class="card-body">
+          <app-dognought-chart
+            [title]="'Vendors'"
+            [colors]="[{backgroundColor: ['#00FF00', '#333300', '#00CCCC']}]"
+            [doughnutChartData]="[[20, 50, 99]]"
+            [doughnutChartLabels]="['Recruited', 'Lost', 'Mantained']"
+            [doughnutChartType]="'pie'"
+          ></app-dognought-chart>
+        </div>
+    </div>
+  </div>
+</div>
