@@ -41,7 +41,7 @@ export class LoginComponent {
 
     this.httpSrv.loginUser(this.loginForm.value, this.loginForm.controls.rememberMe.value)
       .subscribe(
-        (res: LoginFormDataResponse) => this.router.navigateByUrl('/'),
+        (res: LoginFormDataResponse) => this.router.navigateByUrl('/dashboard'),
         (err) =>  Swal.fire('Error', err.error.msg, 'error')
       )
 
